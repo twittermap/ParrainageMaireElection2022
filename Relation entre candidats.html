@@ -1,0 +1,116 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 1250px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#d93a46", "font": {"color": "white"}, "id": "JeanLucMlenchon", "label": "JeanLucMlenchon", "shape": "dot", "title": "JeanLucMlenchon relations:\u003cbr\u003eAnasseKazib\u003cbr\u003eFranoisAsselineau\u003cbr\u003eFabienRoussel\u003cbr\u003eAnneHidalgo\u003cbr\u003eYannickJadot\u003cbr\u003eEmmanuelMacron\u003cbr\u003eValriePcresse\u003cbr\u003eArnaudMontebourg\u003cbr\u003eEricZemmour\u003cbr\u003eNDupontAignan", "value": 10}, {"color": "#dd525d", "font": {"color": "white"}, "id": "FabienRoussel", "label": "FabienRoussel", "shape": "dot", "title": "FabienRoussel relations:\u003cbr\u003eAnasseKazib\u003cbr\u003eChristianeTaubira\u003cbr\u003eJeanLucMlenchon\u003cbr\u003eFranoisAsselineau\u003cbr\u003eAnneHidalgo\u003cbr\u003eYannickJadot\u003cbr\u003eEmmanuelMacron\u003cbr\u003eValriePcresse\u003cbr\u003eArnaudMontebourg\u003cbr\u003eEricZemmour", "value": 10}, {"color": "#e3838a", "font": {"color": "white"}, "id": "AnasseKazib", "label": "AnasseKazib", "shape": "dot", "title": "AnasseKazib relations:\u003cbr\u003eNathalieArthaud\u003cbr\u003eChristianeTaubira\u003cbr\u003eJeanLucMlenchon\u003cbr\u003eFabienRoussel\u003cbr\u003eEmmanuelMacron\u003cbr\u003eValriePcresse\u003cbr\u003eArnaudMontebourg\u003cbr\u003eEricZemmour\u003cbr\u003ePhilippePoutou", "value": 9}, {"color": "#eab4b8", "font": {"color": "white"}, "id": "AnneHidalgo", "label": "AnneHidalgo", "shape": "dot", "title": "AnneHidalgo relations:\u003cbr\u003eChristianeTaubira\u003cbr\u003eJeanLucMlenchon\u003cbr\u003eFranoisAsselineau\u003cbr\u003eFabienRoussel\u003cbr\u003eYannickJadot\u003cbr\u003eEmmanuelMacron\u003cbr\u003eArnaudMontebourg\u003cbr\u003eEricZemmour", "value": 8}, {"color": "#f0e5e6", "font": {"color": "white"}, "id": "ArnaudMontebourg", "label": "ArnaudMontebourg", "shape": "dot", "title": "ArnaudMontebourg relations:\u003cbr\u003eAnasseKazib\u003cbr\u003eChristianeTaubira\u003cbr\u003eJeanLucMlenchon\u003cbr\u003eFranoisAsselineau\u003cbr\u003eFabienRoussel\u003cbr\u003eAnneHidalgo\u003cbr\u003eYannickJadot\u003cbr\u003eEmmanuelMacron\u003cbr\u003eEricZemmour", "value": 9}, {"color": "#e5e9ed", "font": {"color": "white"}, "id": "YannickJadot", "label": "YannickJadot", "shape": "dot", "title": "YannickJadot relations:\u003cbr\u003eJeanLucMlenchon\u003cbr\u003eFranoisAsselineau\u003cbr\u003eFabienRoussel\u003cbr\u003eAnneHidalgo\u003cbr\u003eEmmanuelMacron\u003cbr\u003eValriePcresse\u003cbr\u003eArnaudMontebourg\u003cbr\u003eEricZemmour\u003cbr\u003eMarineLePen", "value": 9}, {"color": "#cddae3", "font": {"color": "white"}, "id": "EmmanuelMacron", "label": "EmmanuelMacron", "shape": "dot", "title": "EmmanuelMacron relations:\u003cbr\u003eAnasseKazib\u003cbr\u003eJeanLucMlenchon\u003cbr\u003eFranoisAsselineau\u003cbr\u003eNDupontAignan\u003cbr\u003eFabienRoussel\u003cbr\u003eAnneHidalgo\u003cbr\u003eYannickJadot\u003cbr\u003eValriePcresse\u003cbr\u003eArnaudMontebourg\u003cbr\u003eEricZemmour\u003cbr\u003eMarineLePen", "value": 11}, {"color": "#b6cad9", "font": {"color": "white"}, "id": "ValriePcresse", "label": "ValriePcresse", "shape": "dot", "title": "ValriePcresse relations:\u003cbr\u003eAnasseKazib\u003cbr\u003eJeanLucMlenchon\u003cbr\u003eFranoisAsselineau\u003cbr\u003eFabienRoussel\u003cbr\u003eYannickJadot\u003cbr\u003eEmmanuelMacron\u003cbr\u003eEricZemmour", "value": 7}, {"color": "#87abc5", "font": {"color": "white"}, "id": "NDupontAignan", "label": "NDupontAignan", "shape": "dot", "title": "NDupontAignan relations:\u003cbr\u003eFlorianPhilippot\u003cbr\u003eJeanLucMlenchon\u003cbr\u003eFranoisAsselineau\u003cbr\u003eEmmanuelMacron\u003cbr\u003eEricZemmour\u003cbr\u003eMarineLePen", "value": 6}, {"color": "#588bb1", "font": {"color": "white"}, "id": "FranoisAsselineau", "label": "FranoisAsselineau", "shape": "dot", "title": "FranoisAsselineau relations:\u003cbr\u003eNathalieArthaud\u003cbr\u003eJeanLucMlenchon\u003cbr\u003eNDupontAignan\u003cbr\u003eFabienRoussel\u003cbr\u003eAnneHidalgo\u003cbr\u003eYannickJadot\u003cbr\u003eEmmanuelMacron\u003cbr\u003eValriePcresse\u003cbr\u003eArnaudMontebourg\u003cbr\u003eEricZemmour\u003cbr\u003ePhilippePoutou\u003cbr\u003eMarineLePen", "value": 12}, {"color": "#417ca7", "font": {"color": "white"}, "id": "EricZemmour", "label": "EricZemmour", "shape": "dot", "title": "EricZemmour relations:\u003cbr\u003eAnasseKazib\u003cbr\u003eJeanLucMlenchon\u003cbr\u003eFranoisAsselineau\u003cbr\u003eNDupontAignan\u003cbr\u003eFabienRoussel\u003cbr\u003eAnneHidalgo\u003cbr\u003eYannickJadot\u003cbr\u003eEmmanuelMacron\u003cbr\u003eValriePcresse\u003cbr\u003eArnaudMontebourg\u003cbr\u003eMarineLePen", "value": 11}, {"color": "#edcdcf", "font": {"color": "white"}, "id": "ChristianeTaubira", "label": "ChristianeTaubira", "shape": "dot", "title": "ChristianeTaubira relations:\u003cbr\u003eArnaudMontebourg\u003cbr\u003eAnneHidalgo\u003cbr\u003eAnasseKazib\u003cbr\u003eFabienRoussel", "value": 4}, {"color": "#e06b73", "font": {"color": "white"}, "id": "NathalieArthaud", "label": "NathalieArthaud", "shape": "dot", "title": "NathalieArthaud relations:\u003cbr\u003eFranoisAsselineau\u003cbr\u003eAnasseKazib", "value": 2}, {"color": "#e79ca1", "font": {"color": "white"}, "id": "PhilippePoutou", "label": "PhilippePoutou", "shape": "dot", "title": "PhilippePoutou relations:\u003cbr\u003eFranoisAsselineau\u003cbr\u003eAnasseKazib", "value": 2}, {"color": "#9fbbcf", "font": {"color": "white"}, "id": "MarineLePen", "label": "MarineLePen", "shape": "dot", "title": "MarineLePen relations:\u003cbr\u003eFranoisAsselineau\u003cbr\u003eYannickJadot\u003cbr\u003eEmmanuelMacron\u003cbr\u003eEricZemmour\u003cbr\u003eNDupontAignan", "value": 5}, {"color": "#709bbb", "font": {"color": "white"}, "id": "FlorianPhilippot", "label": "FlorianPhilippot", "shape": "dot", "title": "FlorianPhilippot relations:\u003cbr\u003eNDupontAignan", "value": 1}]);
+        edges = new vis.DataSet([{"color": "white", "from": "JeanLucMlenchon", "to": "FabienRoussel", "value": 4}, {"color": "white", "from": "JeanLucMlenchon", "to": "AnasseKazib", "value": 11}, {"color": "white", "from": "JeanLucMlenchon", "to": "AnneHidalgo", "value": 5}, {"color": "white", "from": "JeanLucMlenchon", "to": "ArnaudMontebourg", "value": 3}, {"color": "white", "from": "JeanLucMlenchon", "to": "YannickJadot", "value": 12}, {"color": "white", "from": "JeanLucMlenchon", "to": "EmmanuelMacron", "value": 30}, {"color": "white", "from": "JeanLucMlenchon", "to": "ValriePcresse", "value": 4}, {"color": "white", "from": "JeanLucMlenchon", "to": "NDupontAignan", "value": 4}, {"color": "white", "from": "JeanLucMlenchon", "to": "FranoisAsselineau", "value": 30}, {"color": "white", "from": "JeanLucMlenchon", "to": "EricZemmour", "value": 56}, {"color": "white", "from": "FabienRoussel", "to": "AnasseKazib", "value": 5}, {"color": "white", "from": "FabienRoussel", "to": "AnneHidalgo", "value": 2}, {"color": "white", "from": "FabienRoussel", "to": "ChristianeTaubira", "value": 2}, {"color": "white", "from": "FabienRoussel", "to": "ArnaudMontebourg", "value": 3}, {"color": "white", "from": "FabienRoussel", "to": "YannickJadot", "value": 3}, {"color": "white", "from": "FabienRoussel", "to": "EmmanuelMacron", "value": 34}, {"color": "white", "from": "FabienRoussel", "to": "ValriePcresse", "value": 2}, {"color": "white", "from": "FabienRoussel", "to": "FranoisAsselineau", "value": 3}, {"color": "white", "from": "FabienRoussel", "to": "EricZemmour", "value": 5}, {"color": "white", "from": "NathalieArthaud", "to": "AnasseKazib", "value": 5}, {"color": "white", "from": "NathalieArthaud", "to": "FranoisAsselineau", "value": 4}, {"color": "white", "from": "AnasseKazib", "to": "PhilippePoutou", "value": 6}, {"color": "white", "from": "AnasseKazib", "to": "ChristianeTaubira", "value": 3}, {"color": "white", "from": "AnasseKazib", "to": "ArnaudMontebourg", "value": 3}, {"color": "white", "from": "AnasseKazib", "to": "EmmanuelMacron", "value": 8}, {"color": "white", "from": "AnasseKazib", "to": "ValriePcresse", "value": 11}, {"color": "white", "from": "AnasseKazib", "to": "EricZemmour", "value": 7}, {"color": "white", "from": "PhilippePoutou", "to": "FranoisAsselineau", "value": 8}, {"color": "white", "from": "AnneHidalgo", "to": "ChristianeTaubira", "value": 2}, {"color": "white", "from": "AnneHidalgo", "to": "ArnaudMontebourg", "value": 2}, {"color": "white", "from": "AnneHidalgo", "to": "YannickJadot", "value": 6}, {"color": "white", "from": "AnneHidalgo", "to": "EmmanuelMacron", "value": 16}, {"color": "white", "from": "AnneHidalgo", "to": "FranoisAsselineau", "value": 21}, {"color": "white", "from": "AnneHidalgo", "to": "EricZemmour", "value": 4}, {"color": "white", "from": "ChristianeTaubira", "to": "ArnaudMontebourg", "value": 4}, {"color": "white", "from": "ArnaudMontebourg", "to": "YannickJadot", "value": 3}, {"color": "white", "from": "ArnaudMontebourg", "to": "EmmanuelMacron", "value": 12}, {"color": "white", "from": "ArnaudMontebourg", "to": "FranoisAsselineau", "value": 28}, {"color": "white", "from": "ArnaudMontebourg", "to": "EricZemmour", "value": 6}, {"color": "white", "from": "YannickJadot", "to": "EmmanuelMacron", "value": 80}, {"color": "white", "from": "YannickJadot", "to": "ValriePcresse", "value": 6}, {"color": "white", "from": "YannickJadot", "to": "MarineLePen", "value": 6}, {"color": "white", "from": "YannickJadot", "to": "FranoisAsselineau", "value": 28}, {"color": "white", "from": "YannickJadot", "to": "EricZemmour", "value": 6}, {"color": "white", "from": "EmmanuelMacron", "to": "ValriePcresse", "value": 8}, {"color": "white", "from": "EmmanuelMacron", "to": "MarineLePen", "value": 18}, {"color": "white", "from": "EmmanuelMacron", "to": "NDupontAignan", "value": 6}, {"color": "white", "from": "EmmanuelMacron", "to": "FranoisAsselineau", "value": 16}, {"color": "white", "from": "EmmanuelMacron", "to": "EricZemmour", "value": 54}, {"color": "white", "from": "ValriePcresse", "to": "FranoisAsselineau", "value": 67}, {"color": "white", "from": "ValriePcresse", "to": "EricZemmour", "value": 4}, {"color": "white", "from": "MarineLePen", "to": "NDupontAignan", "value": 3}, {"color": "white", "from": "MarineLePen", "to": "FranoisAsselineau", "value": 39}, {"color": "white", "from": "MarineLePen", "to": "EricZemmour", "value": 5}, {"color": "white", "from": "NDupontAignan", "to": "FlorianPhilippot", "value": 3}, {"color": "white", "from": "NDupontAignan", "to": "FranoisAsselineau", "value": 14}, {"color": "white", "from": "NDupontAignan", "to": "EricZemmour", "value": 5}, {"color": "white", "from": "FranoisAsselineau", "to": "EricZemmour", "value": 36}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
